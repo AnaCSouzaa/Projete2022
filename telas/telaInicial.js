@@ -1,55 +1,55 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
 const width = Dimensions.get('screen').width;
 
 
-export default function TelaInicial() {
+export default function TelaInicial({navigation}) {
+  const  SendSMS =() => {
+    navigation.navigate("SMS - localização")
+
+  }
+  const  Call =() => {
+    navigation.navigate("Ligar")
+  }
+  const  Help =() => {
+    navigation.navigate("SMS - emergência")
+  }
+
   return (
-    <View style={estilos.PosicaoTitulo}>
-      <Text style = {estilos.titulo}> Security For You </Text>
-      
-      <TouchableOpacity style={estilos.botao}>
-      <Text style={estilos.textoBotao}> Enviar SMS </Text>
+      <KeyboardAvoidingView style={styles.background}>
+      <View>
+   
+      <TouchableOpacity style={styles.botao} onPress={()=> SendSMS()}>
+      <Text style={styles.textoBotao}> Enviar SMS </Text>
       </TouchableOpacity>
       
-      <TouchableOpacity style={estilos.botao}>
-      <Text style={estilos.textoBotao}> Gravar ligação </Text>
+      <TouchableOpacity style={styles.botao} onPress={()=> Call()}>
+      <Text style={styles.textoBotao}> Realizar ligação </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={estilos.botao}>
-      <Text style={estilos.textoBotaoSOS}> Pedir ajuda </Text>
+      <TouchableOpacity style={styles.botao} onPress={()=> Help()}>
+      <Text style={styles.textoBotaoSOS}> Pedir ajuda </Text>
       </TouchableOpacity>
-
-      <TouchableOpacity style={estilos.botao}>
-      <Text style={estilos.textoBotao}> Configurações </Text>
-      </TouchableOpacity>
-
       
     </View>
+    </KeyboardAvoidingView>
 
   );
 }
 
-const estilos = StyleSheet.create({
-  PosicaoTitulo: {
-    width: "100%",
-    position: "absolute",
+const styles = StyleSheet.create({
+  background: {
+    flex:1,
+    // alignItems: 'center',
+    justifyContent: 'space-evenly',
+    backgroundColor: '#191919'
   },
-  
-  titulo:{
-    marginTop: 10,
-    textAlign:"center",
-    color:"#464646",
-    fontWeight: "bold",
-    fontSize:26,
-    lineHeight:42,
-    padding:16,    
-  }, 
+
   botao: {
-    backgroundColor: "#F0F0F0",
+    backgroundColor: "#00C4CC",
     paddingVertical: 16,
     borderRadius: 6,
-    marginTop: 250,
+    marginTop: 100,
     marginLeft:10,
     marginRight: 10,
   },
@@ -68,24 +68,3 @@ const estilos = StyleSheet.create({
     fontWeight: "bold",
   }
 });
-
-
-
-
-
-/*import react from "react";
-import Botao from "../componentes/botão";
-import { StyleSheet, Text, View, Button} from 'react-native';
-
-
-export default function TelaInicial()
-{
-    return (
-        <View> 
-            <button>
-            <Text style={estilos.textoBotao}> UYUSGDDASVDULAB </Text>
-
-            </button>
-        </View>
-    )
-}*/
