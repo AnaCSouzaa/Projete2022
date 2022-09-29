@@ -17,18 +17,18 @@ export default function TelaInicial({navigation}) {
 
   return (
       <KeyboardAvoidingView style={styles.background}>
-      <View>
+      <View style={styles.container}>
    
       <TouchableOpacity style={styles.botao} onPress={()=> SendSMS()}>
-      <Text style={styles.textoBotao}> Enviar SMS </Text>
+      <Text style={styles.texto}> Enviar SMS </Text>
       </TouchableOpacity>
       
       <TouchableOpacity style={styles.botao} onPress={()=> Call()}>
-      <Text style={styles.textoBotao}> Realizar ligação </Text>
+      <Text style={styles.texto}> Realizar ligação </Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.botao} onPress={()=> Help()}>
-      <Text style={styles.textoBotaoSOS}> Pedir ajuda </Text>
+      <Text style={styles.texto}> Pedir ajuda </Text>
       </TouchableOpacity>
       
     </View>
@@ -40,11 +40,15 @@ export default function TelaInicial({navigation}) {
 const styles = StyleSheet.create({
   background: {
     flex:1,
-    // alignItems: 'center',
-    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#191919'
   },
-
+  container:{ 
+    flex:0.7,
+    width: '100%',
+    paddingBottom:50
+  },
   botao: {
     backgroundColor: "#00C4CC",
     paddingVertical: 16,
@@ -53,18 +57,11 @@ const styles = StyleSheet.create({
     marginLeft:10,
     marginRight: 10,
   },
-  textoBotao: {
+  texto: {
     textAlign: "center",
     color: "#000000",
     fontSize: 20,
     lineHeight: 26,
     fontWeight: "bold",
   },
-  textoBotaoSOS: {
-    textAlign: "center",
-    color: "#FF0000",
-    fontSize: 20,
-    lineHeight: 26,
-    fontWeight: "bold",
-  }
 });

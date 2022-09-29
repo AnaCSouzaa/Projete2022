@@ -8,8 +8,8 @@ import * as SMS from 'expo-sms';
 export default function TelaSMS({navigation}) {
   const [isAvailable, setIsAvailable] = useState(false);
   const [recipients, setRecipients] = useState([]);
-  const [message, setMessage] = useState([]);
-  const [phoneNumber, setPhoneNumber] = useState([]);
+  const message = "777";
+  const phoneNumber= "+55 35 9814-2355";
 
   useEffect(() => {
     async function checkAvailability() {
@@ -31,11 +31,15 @@ export default function TelaSMS({navigation}) {
     console.log(result);
   };
 
+  // const receiveSms = async () => {
+
+    
+  // };
+
   const addNumber = () => {
     let newRecipients = [...recipients];
     newRecipients.push(phoneNumber);
     setRecipients(newRecipients);
-    setPhoneNumber(undefined);
   };
 
   const showRecipients = () => {

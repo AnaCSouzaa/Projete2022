@@ -14,7 +14,7 @@ export default function TelaLogin({navigation}){
     <KeyboardAvoidingView style={styles.background}> 
       <View style={styles.logo}> 
         <Image
-        source={require('../assets/projetelogo.png')}
+        source={require('../assets/logo.jpeg')}
         />
 
       </View>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#191919'
   },
   logo:{
-    flex:1,
+    flex:1.5,
     justifyContent: 'center'
   }, 
   container:{ 
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   fontSize: 18,
 },
 logoEte:{
-  flex:0.2,
+  flex:0.4,
   justifyContent: 'center',
 }
 }

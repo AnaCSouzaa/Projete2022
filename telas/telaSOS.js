@@ -8,7 +8,7 @@ import * as SMS from 'expo-sms';
 export default function TelaSOS({navigation}) {
   const [isAvailable, setIsAvailable] = useState(false);
   const [recipients, setRecipients] = useState([]);
-  const [message, setMessage] = useState([]);
+  const message = "Estou em perigo nesse endereço! Preciso de ajuda!";
   const [phoneNumber, setPhoneNumber] = useState([]);
 
   useEffect(() => {
@@ -20,14 +20,10 @@ export default function TelaSOS({navigation}) {
   }, []);
 
   const sendSms = async () => {
-
-
     const {result} = await SMS.sendSMSAsync(
       recipients,
-      message,
-      
+      message,      
     );
-
     console.log(result);
   };
 
