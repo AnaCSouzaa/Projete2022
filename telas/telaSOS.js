@@ -2,14 +2,30 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import * as SMS from 'expo-sms';
+import * as Location from 'expo-location';
+import Geocoder from 'react-native-geocoding';
+
 
 // expo install expo-sms
 
 export default function TelaSOS({navigation}) {
+  const [location, setLocation] = useState(null);
   const [isAvailable, setIsAvailable] = useState(false);
   const [recipients, setRecipients] = useState([]);
   const message = "Estou em perigo nesse endereço! Preciso de ajuda!";
   const [phoneNumber, setPhoneNumber] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }  
+      setLocation(location);
+    })();
+  })
 
   useEffect(() => {
     async function checkAvailability() {
@@ -18,6 +34,21 @@ export default function TelaSOS({navigation}) {
     }
     checkAvailability();
   }, []);
+
+  async function getLocation()
+  {
+    let location = await Location.getCurrentPositionAsync({});
+    console.log(location);
+    Geocoder.init(AIzaSyB6fG6y3lW7igVPfo3dCu6zJSNn2WE2bvE);
+    Geocoder.init(config.geocodingAPI);
+    Geocoder.from(location.coords.latitude, location.coords.longitude)
+		.then(json => {
+      console.log(json);
+        		// let addressComponent = json.results[0].address_components[0];
+			// console.log(addressComponent);
+		})
+		.catch(error => console.warn(error));
+  }
 
   const sendSms = async () => {
     const {result} = await SMS.sendSMSAsync(

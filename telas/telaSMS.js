@@ -31,10 +31,7 @@ export default function TelaSMS({navigation}) {
     console.log(result);
   };
 
-  // const receiveSms = async () => {
 
-    
-  // };
 
   const addNumber = () => {
     let newRecipients = [...recipients];
@@ -124,7 +121,6 @@ const styles = StyleSheet.create({
     color: "#000000",
     fontSize: 15,
     lineHeight: 26,
-    fontWeight: "italic",
   },
   campoN: {
     textAlign: "left",
@@ -133,7 +129,6 @@ const styles = StyleSheet.create({
     color: "#000000",
     fontSize: 20,
     lineHeight: 26,
-    fontWeight: "italic",
   },
   campoM: {
     textAlign: "left",
@@ -142,6 +137,5 @@ const styles = StyleSheet.create({
     color: "#000000",
     fontSize: 20,
     lineHeight: 26,
-    fontWeight: "italic",
   }
 });
