@@ -2,32 +2,17 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import * as SMS from 'expo-sms';
-import * as Location from 'expo-location';
-import Geocoder from 'react-native-geocoding';
-
-
-// expo install expo-sms
+import * as Print from 'expo-print';
+import * as FileSystem from 'expo-file-system';
 
 export default function TelaSOS({navigation}) {
   const [location, setLocation] = useState(null);
   const [isAvailable, setIsAvailable] = useState(false);
   const [recipients, setRecipients] = useState([]);
-  const message = "Estou em perigo nesse endereço! Preciso de ajuda!";
-  const [phoneNumber, setPhoneNumber] = useState([]);
+  const phoneNumber = "+55 35 9724-6011";
+  const message = "Estou em perigo nesse endereço! Preciso de ajuda!" ;
 
-  useEffect(() => {
-    (async () => {
-      
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }  
-      setLocation(location);
-    })();
-  })
-
-  useEffect(() => {
+   useEffect(() => {
     async function checkAvailability() {
       const isSmsAvailable = await SMS.isAvailableAsync();
       setIsAvailable(isSmsAvailable);
@@ -35,34 +20,30 @@ export default function TelaSOS({navigation}) {
     checkAvailability();
   }, []);
 
-  async function getLocation()
-  {
-    let location = await Location.getCurrentPositionAsync({});
-    console.log(location);
-    Geocoder.init(AIzaSyB6fG6y3lW7igVPfo3dCu6zJSNn2WE2bvE);
-    Geocoder.init(config.geocodingAPI);
-    Geocoder.from(location.coords.latitude, location.coords.longitude)
-		.then(json => {
-      console.log(json);
-        		// let addressComponent = json.results[0].address_components[0];
-			// console.log(addressComponent);
-		})
-		.catch(error => console.warn(error));
-  }
-
   const sendSms = async () => {
+    const { uri } = await Print.printToFileAsync({
+      html: "<h1> Localização: https://www.google.com.br/maps/place/ETE+FMC/@-22.2521447,-45.7047389,15z/data=!4m5!3m4!1s0x94cba2436a6a52ad:0x4b1d9e698970b789!8m2!3d-22.2580998!4d-45.7033694 </h1>"
+              
+    });
+    const contentUri = await FileSystem.getContentUriAsync(uri);
     const {result} = await SMS.sendSMSAsync(
       recipients,
       message,      
+      {
+        attachments: {
+          uri: contentUri,
+          mimeType: "application/pdf",
+          filename: "Localização.pdf"
+        } 
+      }
     );
     console.log(result);
-  };
-
+  }
+  
   const addNumber = () => {
     let newRecipients = [...recipients];
     newRecipients.push(phoneNumber);
     setRecipients(newRecipients);
-    setPhoneNumber(undefined);
   };
 
   const showRecipients = () => {
@@ -77,7 +58,7 @@ export default function TelaSOS({navigation}) {
 
   return (
     <View>
-      <TextInput value={phoneNumber} style={styles.campoN} placeholder="Número de telefone" onChangeText={(value) => setPhoneNumber(value)} />
+      <TextInput value={phoneNumber} style={styles.campoN} placeholder="Número de telefone" onChange={(value) => setPhoneNumber(value)} />
 
       <TouchableOpacity style={styles.botao} onPress={addNumber} >
       <Text style={styles.texto}> Adicionar número </Text>
@@ -107,7 +88,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#191919',
     justifyContent: 'center',    
   },
-
   conteudo: {
     backgroundColor: "#d3d3d3",
     paddingVertical: 16,
@@ -147,7 +127,6 @@ const styles = StyleSheet.create({
     color: "#000000",
     fontSize: 15,
     lineHeight: 26,
-    fontWeight: "italic",
   },
   campoN: {
     textAlign: "left",
@@ -156,7 +135,6 @@ const styles = StyleSheet.create({
     color: "#000000",
     fontSize: 20,
     lineHeight: 26,
-    fontWeight: "italic",
   },
   campoM: {
     textAlign: "left",
@@ -165,6 +143,5 @@ const styles = StyleSheet.create({
     color: "#000000",
     fontSize: 20,
     lineHeight: 26,
-    fontWeight: "italic",
   }
 });

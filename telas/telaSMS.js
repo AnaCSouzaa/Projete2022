@@ -9,7 +9,7 @@ export default function TelaSMS({navigation}) {
   const [isAvailable, setIsAvailable] = useState(false);
   const [recipients, setRecipients] = useState([]);
   const message = "777";
-  const phoneNumber= "+55 35 9814-2355";
+  const phoneNumber= "(35) 99814-2355";
 
   useEffect(() => {
     async function checkAvailability() {
